@@ -1,12 +1,41 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import { ClassDruid } from './components/ClassDruid';
+import { ClassKnight } from './components/ClassKnight';
+import { ClassPaladin } from './components/ClassPaladin';
+import { ClassSorcerer } from './components/ClassSorcerer';
+import { Header } from './components/Header';
+import styled from 'styled-components';
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [userClass, setUserClass] = useState<React.ReactNode | undefined>();
+  const [userType, setUserType] = useState('');
+  const classes = ['Choose one', 'Paladin', 'Druid', 'Sorcerer', 'Knight', ];
 
+  async function getUserClass() {
+    switch(userType) {
+      case 'Paladin':
+        return <ClassPaladin />;
+      case 'Druid':
+        return <ClassDruid />;
+      case 'Sorcerer':
+        return <ClassSorcerer />;
+      case 'Knight':
+        return <ClassKnight />;
+      default:
+        return <></>;
+    }
+  }
+  useEffect(() => {
+    const fetchUserClass = async () => {
+      const result = await getUserClass();
+      setUserClass(result);
+    };
+
+    fetchUserClass();
+  }, [userType]);
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setGreetMsg(await invoke("greet", { name }));
@@ -14,19 +43,13 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      <Header />
+      <h2>Choose your class</h2>
+      <Selector onChange={(e) => setUserType(e.target.value)}>
+        {classes.map((c, i) => <option key={i} value={c}>{c}</option>)}
+      </Selector>
+      <br></br>
+      {userClass}
 
       <p>Click on the Tauri, Vite, and React logos to learn more.</p>
 
@@ -51,3 +74,8 @@ function App() {
 }
 
 export default App;
+
+const Selector = styled.select`
+  width: 200px;
+  padding: 6px 20px;
+  `;
