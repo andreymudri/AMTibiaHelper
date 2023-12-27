@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
 import { ClassDruid } from './components/ClassDruid';
 import { ClassKnight } from './components/ClassKnight';
 import { ClassPaladin } from './components/ClassPaladin';
@@ -8,8 +7,6 @@ import { Header } from './components/Header';
 import styled from 'styled-components';
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
   const [userClass, setUserClass] = useState<React.ReactNode | undefined>();
   const [userType, setUserType] = useState('');
   const classes = ['Choose one', 'Paladin', 'Druid', 'Sorcerer', 'Knight', ];
@@ -36,10 +33,6 @@ function App() {
 
     fetchUserClass();
   }, [userType]);
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
 
   return (
     <div className="container">
@@ -51,24 +44,6 @@ function App() {
       <br></br>
       {userClass}
 
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-
-      <p>{greetMsg}</p>
     </div>
   );
 }

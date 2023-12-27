@@ -39,9 +39,6 @@ div{
     height:30px;
     input{
       width: 10%;
-      height: 5px;
-      margin: 5 10px;
-      padding: 5 0px;
     }
   }
 }
