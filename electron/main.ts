@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-
+import robotjs from 'robotjs'
 // The built directory structure
 //
 // ├─┬─┬ dist
@@ -63,3 +63,6 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(createWindow)
+
+const robot = robotjs.getPixelColor(100, 100)
+console.log(robot)

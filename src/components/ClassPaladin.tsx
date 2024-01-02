@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Main, Title } from './classStyledComponents';
+import { Main, Title, VocationDiv } from './classStyledComponents';
 
 export function ClassPaladin() {
   const [values, setValues] = useState({
@@ -31,7 +31,7 @@ export function ClassPaladin() {
   };
 
   return (
-    <div>
+    <VocationDiv>
       <Title>
       Paladin
       </Title>
@@ -52,8 +52,13 @@ export function ClassPaladin() {
           <div>Priority 4<input type="text" name='priority4' value={values.priority4} onChange={handleChange} /></div>
           <div>Priority 5<input type="text" name='priority5' value={values.priority5} onChange={handleChange} /></div>
         </div>
+        <div id="Tank">
+          123123123
+
+
+        </div>
     </Main>
-    </div>
+    </VocationDiv>
   )
 }
 
